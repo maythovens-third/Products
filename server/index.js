@@ -17,5 +17,5 @@ app.get('/', function (req, res, next) {
     });
 });
 app.listen(3000, function () {
-    console.log('Server is running.. on Port 3000');
+    console.log('Leslie, the server is online at port 3000.');
 });
