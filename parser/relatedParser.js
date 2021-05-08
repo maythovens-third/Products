@@ -3,41 +3,49 @@ const path = require('path');
 const fastcsv = require('fast-csv');
 
 const { Client } = require('pg');
-const connectionString = 'postgres://lesliengo:postgres@localhost:5432/products';
+const connectionString = 'postgres://lesliengo:postgres@localhost:5432/testproducts';
 const client = new Client({
     connectionString: connectionString
 });
 client.connect();
 
-const relatedDataPath = path.join(__dirname, '..', 'csv', 'testCSV', 'relatedTestBreak.csv');
+const relatedDataPath = path.join(__dirname, '..', 'csv', 'related.csv');
 
 let stream = fs.createReadStream(relatedDataPath);
-let csvData = [];
+let count = 0;
 let csvStream = fastcsv
-  .parse({ headers: true })
+  .parse()
   .on("data", function(row) {
-    if ((row.length === 3) && (!row.includes('0')) && (!row.includes(''))) {
-      const toInt = [];
-      row.forEach((field) => {
-        toInt.push(parseInt(field));
-      })
-      csvData.push(toInt);
-    }
-  })
-  .on("end", function() {
-    csvData.shift();
-    csvData.forEach((row) => {
-      const query = {
-        text: 'INSERT INTO related_join(id, productId, relatedId) VALUES($1, $2, $3)',
-        values: [row[0], row[1], row[2]],
-      }
-      client
-        .query(query)
-        .then(result => console.log(result))
-        .catch(e => console.error(e.stack))
-    })
 
-  });
+    if ((row.length === 3) && (!row.includes('0')) && (!row.includes('')) && (!row.includes('id'))) {
+
+      const product = [
+        parseInt(row[0]),
+        parseInt(row[1]),
+        parseInt(row[2])
+      ]
+
+const q = 'INSERT INTO related_join(id, productId, relatedId) VALUES($1, $2, $3)';
+
+      client.query(q, product)
+        .catch(e => console.error(e.stack));
+
+      count++;
+    }
+    console.log(count);
+  })
+  .on("end", function() {});
 
 
 stream.pipe(csvStream);
+
+// csvData.forEach((row) => {
+//   const query = {
+//     text: 'INSERT INTO related_join(id, productId, relatedId) VALUES($1, $2, $3)',
+//     values: [row[0], row[1], row[2]],
+//   }
+//   client
+//     .query(query)
+//     .then(result => console.log(result))
+//     .catch(e => console.error(e.stack))
+// })
