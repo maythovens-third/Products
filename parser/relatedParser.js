@@ -9,9 +9,13 @@ const client = new Client({
 });
 client.connect();
 
-const relatedDataPath = path.join(__dirname, '..', 'csv', 'related.csv');
+const relatedDataPath1 = path.join(__dirname, '..', 'csv','relatedChunks', 'xaa.csv');
+const relatedDataPath2 = path.join(__dirname, '..', 'csv','relatedChunks', 'xab.csv');
+const relatedDataPath3 = path.join(__dirname, '..', 'csv','relatedChunks', 'xac.csv');
+const relatedDataPath4 = path.join(__dirname, '..', 'csv','relatedChunks', 'xad.csv');
+const relatedDataPath5 = path.join(__dirname, '..', 'csv','relatedChunks', 'xae.csv');
 
-let stream = fs.createReadStream(relatedDataPath);
+let stream = fs.createReadStream(relatedDataPath2); //railswitch here.
 let count = 0;
 let csvStream = fastcsv
   .parse()
@@ -25,7 +29,7 @@ let csvStream = fastcsv
         parseInt(row[2])
       ]
 
-const q = 'INSERT INTO related_join(id, productId, relatedId) VALUES($1, $2, $3)';
+const q = 'INSERT INTO related_join(id, productId, relatedId) VALUES($1, $2, $3) ON CONFLICT ON CONSTRAINT related_join_productid_fkey DO NOTHING';
 
       client.query(q, product)
         .catch(e => console.error(e.stack));
