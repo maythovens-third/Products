@@ -14,10 +14,10 @@ DROP TABLE IF EXISTS Products;
 
 CREATE TABLE Products (
   productId INTEGER NULL DEFAULT NULL,
-  name VARCHAR(512) NULL DEFAULT NULL,
+  name VARCHAR(128) NULL DEFAULT NULL,
   slogan VARCHAR(512) NULL DEFAULT NULL,
   description VARCHAR(512) NULL DEFAULT NULL,
-  category INTEGER NULL DEFAULT NULL,
+  category VARCHAR(64) NULL DEFAULT NULL,
   defaultPrice INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (productId)
 );
@@ -142,15 +142,15 @@ CREATE TABLE Feature_Values (
 -- Foreign Keys
 -- ---
 
-ALTER TABLE Products ADD FOREIGN KEY (category) REFERENCES Categories (id);
-ALTER TABLE Related_Join ADD FOREIGN KEY (productId) REFERENCES Products (productId);
-ALTER TABLE Related_Join ADD FOREIGN KEY (relatedId) REFERENCES Products (productId);
-ALTER TABLE Product_Styles ADD FOREIGN KEY (productId) REFERENCES Products (productId);
-ALTER TABLE Product_Features ADD FOREIGN KEY (productId) REFERENCES Products (productId);
-ALTER TABLE Product_Features ADD FOREIGN KEY (featureNameId) REFERENCES Feature_Names (id);
-ALTER TABLE Product_Features ADD FOREIGN KEY (featureValueId) REFERENCES Feature_Values (id);
-ALTER TABLE photos ADD FOREIGN KEY (styleId) REFERENCES Product_Styles (styleId);
-ALTER TABLE skus ADD FOREIGN KEY (styleId) REFERENCES Product_Styles (styleId);
+-- ALTER TABLE Products ADD FOREIGN KEY (category) REFERENCES Categories (id);
+-- ALTER TABLE Related_Join ADD FOREIGN KEY (productId) REFERENCES Products (productId);
+-- ALTER TABLE Related_Join ADD FOREIGN KEY (relatedId) REFERENCES Products (productId);
+-- ALTER TABLE Product_Styles ADD FOREIGN KEY (productId) REFERENCES Products (productId);
+-- ALTER TABLE Product_Features ADD FOREIGN KEY (productId) REFERENCES Products (productId);
+-- ALTER TABLE Product_Features ADD FOREIGN KEY (featureNameId) REFERENCES Feature_Names (id);
+-- ALTER TABLE Product_Features ADD FOREIGN KEY (featureValueId) REFERENCES Feature_Values (id);
+-- ALTER TABLE photos ADD FOREIGN KEY (styleId) REFERENCES Product_Styles (styleId);
+-- ALTER TABLE skus ADD FOREIGN KEY (styleId) REFERENCES Product_Styles (styleId);
 
 -- ---
 -- Table Properties

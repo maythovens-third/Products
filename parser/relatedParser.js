@@ -15,7 +15,7 @@ const relatedDataPath3 = path.join(__dirname, '..', 'csv','relatedChunks', 'xac.
 const relatedDataPath4 = path.join(__dirname, '..', 'csv','relatedChunks', 'xad.csv');
 const relatedDataPath5 = path.join(__dirname, '..', 'csv','relatedChunks', 'xae.csv');
 
-let stream = fs.createReadStream(relatedDataPath2); //railswitch here.
+let stream = fs.createReadStream(relatedDataPath1); //railswitch here.
 let count = 0;
 let csvStream = fastcsv
   .parse()
@@ -29,27 +29,18 @@ let csvStream = fastcsv
         parseInt(row[2])
       ]
 
-const q = 'INSERT INTO related_join(id, productId, relatedId) VALUES($1, $2, $3) ON CONFLICT ON CONSTRAINT related_join_productid_fkey DO NOTHING';
+const q = `EXPLAIN ANALYZE INSERT INTO related_join(id, productId, relatedId) VALUES(${product[0]}, ${product[1]}, ${product[2]}) ON CONFLICT ON CONSTRAINT related_join_pkey DO NOTHING`;
 
       client.query(q, product)
+        .then(count++)
+        .then(result => console.log(result))
         .catch(e => console.error(e.stack));
 
-      count++;
     }
-    console.log(count);
+    if (count % 100 === 0)
+      {console.log(count);}
+
   })
   .on("end", function() {});
 
-
-stream.pipe(csvStream);
-
-// csvData.forEach((row) => {
-//   const query = {
-//     text: 'INSERT INTO related_join(id, productId, relatedId) VALUES($1, $2, $3)',
-//     values: [row[0], row[1], row[2]],
-//   }
-//   client
-//     .query(query)
-//     .then(result => console.log(result))
-//     .catch(e => console.error(e.stack))
-// })
+  stream.pipe(csvStream);
