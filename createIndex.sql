@@ -16,3 +16,7 @@ CREATE INDEX productRootTableIndex ON products(productId);
 DROP INDEX relatedJoinProductIdIndex;
 CREATE INDEX relatedJoinProductIdIndex ON related_join(productId);
 CLUSTER related_join USING relatedJoinProductIdIndex;
+
+DROP INDEX productFeaturesProductIdIndex;
+CREATE INDEX productFeaturesProductIdIndex ON product_features(productId);
+CLUSTER product_features USING productFeaturesProductIdIndex;

@@ -24,7 +24,7 @@ getSpecificProduct = (productId, cb) => {
 };
 
 getProductFeatures = (productId) => {
-  const q = 'SELECT * FROM product_features WHERE productId =$1';
+  const q = 'SELECT * FROM product_features WHERE productId = $1';
   return client.query(q, [productId]);
 };
 
