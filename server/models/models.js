@@ -26,17 +26,36 @@ getSpecificProduct = (productId, cb) => {
   })
 };
 
-getProductStyles = (productId, cb) => {
-  const q = 'SELECT * from product_styles, photos, skus WHERE product_styles.styleid = photos.styleid AND product_styles.styleid = skus.styleid AND productId = $1';
+getRelatedProducts = (productId, cb) => {
+  const q = 'SELECT ARRAY (SELECT relatedId FROM related_join WHERE productId = $1)';
   client.query(q, [productId], (err, result) => {
-    if(err) cb(err);
+    if (err) cb(err);
     cb(null, result);
   })
+}
+
+getProductStyles = (productId) => {
+  const q = 'SELECT * FROM product_styles WHERE productId = $1';
+  return client.query(q, [productId]);
 };
+
+getPhotos = (productId) => {
+  const q = 'SELECT * FROM photos WHERE styleId IN (SELECT styleId FROM product_styles WHERE productId = $1)';
+  return client.query(q, [productId]);
+};
+
+getSkus = (productId) => {
+  const q = 'SELECT * FROM SKUs WHERE styleId IN (SELECT styleId FROM product_styles WHERE productId = $1)';
+  return client.query(q, [productId]);
+};
+
 
 module.exports = {
   getDefaultAmount,
   getCustomAmount,
   getSpecificProduct,
+  getRelatedProducts,
   getProductStyles,
+  getPhotos,
+  getSkus,
 };

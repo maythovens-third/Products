@@ -78,11 +78,11 @@ CREATE TABLE Photos (
   id INTEGER NULL DEFAULT NULL,
   styleId INTEGER NULL DEFAULT NULL,
   url TEXT NULL DEFAULT NULL,
-  thumbnnail_url TEXT NULL DEFAULT NULL,
+  thumbnail_url TEXT NULL DEFAULT NULL,
   PRIMARY KEY (id)
 );
 
-COPY Photos(id, styleId, url, thumbnnail_url)
+COPY Photos(id, styleId, url, thumbnail_url)
 FROM '/Users/lesliengo/hackreactor/SDC/Products/csv/photos.csv'
 DELIMITER ','
 CSV HEADER;
