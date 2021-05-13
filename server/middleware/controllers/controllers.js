@@ -18,10 +18,24 @@ getCustomAmount = (req, res) => {
 
 getSpecificProduct = (req, res) => {
   const productId = req.params.product_id;
-  models.getSpecificProduct(productId, (err, result) => {
-    if(err) res.status(400).send(err);
-    res.status(200).send(result.rows);
+
+  const productPromise = models.getSpecificProduct(productId);
+  const featuresPromise = models.getProductFeatures(productId);
+
+  Promise.all([productPromise, featuresPromise]).then((values) => {
+    const product = values[0].rows;
+    const features = values[1].rows;
+
+    product[0].features = [];
+
+    for (let i=0; i<features.length; i++) {
+      product[0].features.push({feature: features[i].featurename, value: features[i].featurevalue});
+    }
+
+    return product[0];
   })
+  .catch((err) => {res.status(400).send(err)})
+  .then((product) => {res.status(200).send(product)});
 }
 
 getRelatedProducts = (req, res) => {
@@ -46,7 +60,7 @@ getProductStyles = (req, res) => {
 
     for (let i=0; i<styles.length; i++) {
       styles[i].photos = [];
-      styles[i].skus = [];
+      styles[i].skus = {};
       photos.forEach((photo) => {
         if(photo.styleid === styles[i].styleid) {
           styles[i].photos.push({url: photo.url, thumbnail_url: photo.thumbnail_url});
@@ -54,13 +68,14 @@ getProductStyles = (req, res) => {
       })
       skus.forEach((sku) => {
         if(sku.styleid === styles[i].styleid) {
-          styles[i].skus.push({size: sku.size, quantity: sku.quantity});
+          styles[i].skus[sku.id] = {size: sku.size, quantity: sku.quantity};
         }
       })
     }
-
-    res.status(200).send(styles);
+    return styles;
   })
+  .catch((err) => {res.status(400).send(err)})
+  .then((styles) => {res.status(200).send(styles)});
 }
 
 

@@ -20,10 +20,12 @@ getCustomAmount = (pageAndQty, cb) => {
 
 getSpecificProduct = (productId, cb) => {
   const q = 'SELECT * FROM products WHERE productId = $1';
-  client.query(q, [productId], (err, result) => {
-    if (err) cb(err);
-    cb(null, result);
-  })
+  return client.query(q, [productId]);
+};
+
+getProductFeatures = (productId) => {
+  const q = 'SELECT * FROM product_features WHERE productId =$1';
+  return client.query(q, [productId]);
 };
 
 getRelatedProducts = (productId, cb) => {
@@ -32,7 +34,7 @@ getRelatedProducts = (productId, cb) => {
     if (err) cb(err);
     cb(null, result);
   })
-}
+};
 
 getProductStyles = (productId) => {
   const q = 'SELECT * FROM product_styles WHERE productId = $1';
@@ -54,6 +56,7 @@ module.exports = {
   getDefaultAmount,
   getCustomAmount,
   getSpecificProduct,
+  getProductFeatures,
   getRelatedProducts,
   getProductStyles,
   getPhotos,
