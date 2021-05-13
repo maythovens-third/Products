@@ -9,3 +9,10 @@ CLUSTER photos USING relatedStylePhotos;
 DROP INDEX relatedStyleSkus;
 CREATE INDEX relatedStyleSkus ON skus(styleId);
 CLUSTER SKUs USING relatedStyleSkus;
+
+DROP INDEX productRootTableIndex;
+CREATE INDEX productRootTableIndex ON products(productId);
+
+DROP INDEX relatedJoinProductIdIndex;
+CREATE INDEX relatedJoinProductIdIndex ON related_join(productId);
+CLUSTER related_join USING relatedJoinProductIdIndex;
