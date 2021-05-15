@@ -1,17 +1,18 @@
-API Product Requests
+# API Product Requests
 
-GET:
+### GET:
   /products 
-BEHAVIOR: 
+### BEHAVIOR: 
   Retrieves the list of products.
-INPUT PARAMETERS:
-  Page (int). Selects the page of results to return. Default 1.
-  Count (int). Specifies how many results per page to return. Default 5.
-OUTPUT:
+### INPUT PARAMETERS:
+ - Page (int). Selects the page of results to return. Default 1.
+ - Count (int). Specifies how many results per page to return. Default 5.
+### OUTPUT:
   An array of products with shallow field data, including:
    name, slogan, description, category, and default price.
    
-EXAMPLE:
+### EXAMPLE:
+```
 [
   {
         "id": 1,
@@ -31,16 +32,18 @@ EXAMPLE:
     },
     // ...
 ]
+```
 
-GET:
+### GET:
   /products/:product_id
-BEHAVIOR:
+### BEHAVIOR:
   Returns all product level information for a specified product id.
-INPUT PARAMETERS:
+### INPUT PARAMETERS:
   Product ID (int). Required ID of the Product requested.
-OUTPUT:
+### OUTPUT:
   Returns an object of shallow field data of ONE product, and includes a list of features.
-EXAMPLE:
+### EXAMPLE:
+```
 {
     "id": 11,
     "name": "Air Minis 250",
@@ -60,16 +63,17 @@ EXAMPLE:
     // ...
     ],
 }
+```
 
-GET:
+### GET:
   /products/:product_id/styles
-BEHAVIOR:
+### BEHAVIOR:
   Returns the all styles available for the given product.
-INPUT PARAMETERS:
+### INPUT PARAMETERS:
   Product ID (int). Required ID of the Product requested.
-OUTPUT:
+### OUTPUT:
 
 
-EXAMPLE:
+### EXAMPLE:
   GET /products/:product_id/related
 
