@@ -1,7 +1,8 @@
 # API Product Requests
 
+## Get default amount of products, or get custom amount:
 ### GET:
-  /products 
+  `/products` or `/products/:page/:amount`
 ### BEHAVIOR: 
   Retrieves the list of products.
 ### INPUT PARAMETERS:
@@ -33,9 +34,9 @@
     // ...
 ]
 ```
-
+## Get specfic product, with product features:
 ### GET:
-  /products/:product_id
+  `/products/:product_id`
 ### BEHAVIOR:
   Returns all product level information for a specified product id.
 ### INPUT PARAMETERS:
@@ -64,9 +65,9 @@
     ],
 }
 ```
-
+## Get a product's styles:
 ### GET:
-  /products/:product_id/styles
+  `/products/:product_id/styles`
 ### BEHAVIOR:
   Returns the all styles available for the given product.
 ### INPUT PARAMETERS:
@@ -75,5 +76,7 @@
 
 
 ### EXAMPLE:
-  GET /products/:product_id/related
+
+## Get all related products of target product:
+### GET /products/:product_id/related
 
