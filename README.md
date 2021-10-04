@@ -15,7 +15,7 @@ The Atelier Product API provides fashion product data to the eCommerce site PROJ
 - PostgresQL - database
 - K6 - load testing
 
-## Endpoints:
+# Endpoints:
 
 ## Get default amount of products, or get custom amount:
 
@@ -221,7 +221,7 @@ The Atelier Product API provides fashion product data to the eCommerce site PROJ
 ],
 ```
 
-## Load Testing and Optimizations
+# Load Testing and Optimizations
 
 K6 load testing was employed to locate where optimizations could be made. The optimizations made with given constraints are as follows:
 
