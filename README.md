@@ -38,7 +38,7 @@
 ### GET:
   `/products/:product_id`
 ### BEHAVIOR:
-  Returns all product level information for a specified product id.
+  Returns all product level information for the specified product ID.
 ### INPUT PARAMETERS:
   Product ID (int). Required ID of the Product requested.
 ### OUTPUT:
@@ -69,14 +69,100 @@
 ### GET:
   `/products/:product_id/styles`
 ### BEHAVIOR:
-  Returns the all styles available for the given product.
+  Returns all styles available for the specified product ID, as well as SKUs (stock-keeping units) for each style. 
 ### INPUT PARAMETERS:
   Product ID (int). Required ID of the Product requested.
 ### OUTPUT:
-
+  An object containing details for each of the target's individual styles. `photos` and `skus` are nested structures.
 
 ### EXAMPLE:
+```
+{
+    "product_id": "1",
+    "results": [
+  	{
+            "style_id": 1,
+            "name": "Forest Green & Black",
+            "original_price": "140",
+            "sale_price": "0",
+            "default?": true,
+            "photos": [
+  			{
+                    "thumbnail_url": "urlplaceholder/style_1_photo_number_thumbnail.jpg",
+                    "url": "urlplaceholder/style_1_photo_number.jpg"
+                },
+  			{
+                    "thumbnail_url": "urlplaceholder/style_1_photo_number_thumbnail.jpg",
+                    "url": "urlplaceholder/style_1_photo_number.jpg"
+                }
+  			// ...
+            ],
+        "skus": {
+                	"37": {
+                    		"quantity": 8,
+                    		"size": "XS"
+                	},
+                	"38": {
+                    		"quantity": 16,
+                    		"size": "S"
+                	},
+                	"39": {
+                    		"quantity": 17,
+                    		"size": "M"
+                	},
+            //...
+            	}
+    },
+  {
+        "style_id": 2,
+        "name": "Desert Brown & Tan",
+        "original_price": "140",
+        "sale_price": "0",
+        "default?": false,
+        "photos": [
+  			{
+                    "thumbnail_url": "urlplaceholder/style_2_photo_number_thumbnail.jpg",
+                    "url": "urlplaceholder/style_2_photo_number.jpg"
+        }
+      // ...
+            ],
+        "skus": {
+                	"37": {
+                    		"quantity": 8,
+                    		"size": "XS"
+                	},
+                	"38": {
+                    		"quantity": 16,
+                    		"size": "S"
+                	},
+                	"39": {
+                    		"quantity": 17,
+                    		"size": "M"
+                	},
+            //...
+            	}
+    },
+  // ...
+}
+```
 
 ## Get all related products of target product:
-### GET /products/:product_id/related
+### GET:
+`/products/:product_id/related`
+### BEHAVIOR:
+  Returns the IDs of products related to the product specified.
+### INPUT PARAMETERS:
+  Product ID (int). Required ID of the Product requested.
+### OUTPUT:
+  An array of product IDs (int) of all products related to the specified product.
+### EXAMPLE:
+```
+[
+  2,
+  3,
+  8,
+  7
+],
+```
+
 
