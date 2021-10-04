@@ -1,18 +1,43 @@
-# API Product Requests
+# Atelier Product API Module
+
+The Atelier Product API provides fashion product data to the eCommerce site PROJECT:Catwalk. The API is responsible for retrieving data from an instance of Postgres, as well shaping the data so that it may be consumed by the client. The API is built with ExpressJS, which is a Node.js application framework. It was requested that this API meet and sustain approximately 1000 requests per second. 
+
+## Contents:
+  -[Stack](#Stack)
+  -[Endpoints](#Endpoints)
+  -[Load Testing and Optimizations](#Load-Testing-and-Optimizations)
+  -[Optimizations Beyond Existing Constraints](#Optimizations-beyond-existing-constraints)
+
+## Stack:
+
+- Express.js - server
+- NGINX - load balancing and static caching
+- PostgresQL - database
+- K6 - load testing
+
+## Endpoints:
 
 ## Get default amount of products, or get custom amount:
+
 ### GET:
+
   `/products` or `/products/:page/:amount`
 ### BEHAVIOR: 
+
   Retrieves the list of products.
+  
 ### INPUT PARAMETERS:
+
  - Page (int). Selects the page of results to return. Default 1.
  - Count (int). Specifies how many results per page to return. Default 5.
+
 ### OUTPUT:
+
   An array of products with shallow field data, including:
    name, slogan, description, category, and default price.
    
 ### EXAMPLE:
+
 ```
 [
   {
@@ -34,16 +59,27 @@
     // ...
 ]
 ```
+
 ## Get specfic product, with product features:
+
 ### GET:
+
   `/products/:product_id`
+  
 ### BEHAVIOR:
+
   Returns all product level information for the specified product ID.
+  
 ### INPUT PARAMETERS:
-  Product ID (int). Required ID of the Product requested.
+
+  - Product ID (int). Required ID of the Product requested.
+
 ### OUTPUT:
+
   Returns an object of shallow field data of ONE product, and includes a list of features.
+  
 ### EXAMPLE:
+
 ```
 {
     "id": 11,
@@ -65,17 +101,27 @@
     ],
 }
 ```
+
 ## Get a product's styles:
+
 ### GET:
+
   `/products/:product_id/styles`
+  
 ### BEHAVIOR:
+
   Returns all styles available for the specified product ID, as well as SKUs (stock-keeping units) for each style. 
+  
 ### INPUT PARAMETERS:
-  Product ID (int). Required ID of the Product requested.
+
+  - Product ID (int). Required ID of the Product requested.
+
 ### OUTPUT:
+
   An object containing details for each of the target's individual styles. `photos` and `skus` are nested structures.
 
 ### EXAMPLE:
+
 ```
 {
     "product_id": "1",
@@ -147,15 +193,25 @@
 ```
 
 ## Get all related products of target product:
+
 ### GET:
+
 `/products/:product_id/related`
+
 ### BEHAVIOR:
+
   Returns the IDs of products related to the product specified.
+  
 ### INPUT PARAMETERS:
-  Product ID (int). Required ID of the Product requested.
+
+  - Product ID (int). Required ID of the Product requested.
+
 ### OUTPUT:
+
   An array of product IDs (int) of all products related to the specified product.
+  
 ### EXAMPLE:
+
 ```
 [
   2,
@@ -164,5 +220,33 @@
   7
 ],
 ```
+
+## Load Testing and Optimizations
+
+K6 load testing was employed to locate where optimizations could be made. The optimizations made with given constraints are as follows:
+
+### Static Caching via NGINX Load Balancer Instance
+
+Caching of server responses dramatically improved the response time for each request made to the load balancer. Responses are cached locally on the load balancer's EC2.
+  
+### Horizontal Scaling
+
+Deployment of multiple Express server instances increases the load the system is able to handle, but results from K6 testing indicate that replication provides no meaningful increase in performance beyond 3 servers.
+
+### Cluster Indexing
+
+A feature of PostgresQL, cluster indexing rewrites all related indexes to be physically near each other on disk memory. This resulted in an almost unnoticeable increase in performance.
+
+## Optimizations Beyond Existing Constraints
+
+### Vertical Scaling (financial constraint)
+
+Because the EC2 provides Postgres a single processor, Postgres is tuned to employ a single worker. If the financial constraints were lifted, better hardware (more CPUs) would allow Postgres to be tuned to employ more workers, increasing the performance of the system. 
+
+### Database Sharding (time constraint)
+
+Investigation reveals that database sharding divides the database into automous partitions. This means they do not share any data or computing resources. If each partition is hosted on its own instance, this affords each instance at least its own single worker. This may allow requests made on different segments of the database to be handled asynchronously, which may improve performance. 
+
+
 
 
