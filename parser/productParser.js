@@ -26,7 +26,7 @@ const priceParse = value => {
 }
 
 let csvStream = fastcsv
-  .parse() //{ headers: true }
+  .parse()
   .on("data", function(row) {
     const product = [
       parseInt(row[0]),
@@ -37,14 +37,12 @@ let csvStream = fastcsv
       priceParse(row[5])
     ]
     const [ id, name, slogan, description, category, default_price ] = product;
-    // console.log(typeof id, typeof name, typeof slogan, typeof description, typeof default_price);
     if (id && name && default_price) {
       const q = `INSERT INTO products(productid, name, slogan, description, category, defaultprice) VALUES($1, $2, $3, $4, $5, $6) ON CONFLICT ON CONSTRAINT products_pkey DO NOTHING`;
       client.query(q, product, (err) => {
           if (err) {
               throw err
           }
-          // console.log(product);
       })
       count++;
     }

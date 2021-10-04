@@ -11,7 +11,7 @@ CREATE TABLE Products (
 );
 
 COPY Products(productId, name, slogan, description, category, defaultPrice)
-FROM '/Users/lesliengo/hackreactor/SDC/Products/csv/product.csv'
+FROM '/product.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -28,7 +28,7 @@ CREATE TABLE Product_Features (
 );
 
 COPY Product_Features(id, productId, featureName, featureValue)
-FROM '/Users/lesliengo/hackreactor/SDC/Products/csv/features.csv'
+FROM '/features.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -45,7 +45,7 @@ CREATE TABLE Related_Join (
 );
 
 COPY Related_Join(id, productId, relatedId)
-FROM '/Users/lesliengo/hackreactor/SDC/Products/csv/related.csv'
+FROM '/related.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -65,7 +65,7 @@ CREATE TABLE Product_Styles (
 );
 
 COPY Product_Styles(styleId, productId, name, salePrice, originalPrice, defaultStyle)
-FROM '/Users/lesliengo/hackreactor/SDC/Products/csv/styles.csv'
+FROM '/styles.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -83,7 +83,7 @@ CREATE TABLE Photos (
 );
 
 COPY Photos(id, styleId, url, thumbnail_url)
-FROM '/Users/lesliengo/hackreactor/SDC/Products/csv/photos.csv'
+FROM '/photos.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -101,7 +101,7 @@ CREATE TABLE SKUs (
 );
 
 COPY SKUs(id, styleId, size, quantity)
-FROM '/Users/lesliengo/hackreactor/SDC/Products/csv/skus.csv'
+FROM '/skus.csv'
 DELIMITER ','
 CSV HEADER;
 

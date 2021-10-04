@@ -9,13 +9,14 @@ const client = new Client({
 });
 client.connect();
 
+// CSV too large, had to chunk from terminal:
 const relatedDataPath1 = path.join(__dirname, '..', 'csv','relatedChunks', 'xaa.csv');
 const relatedDataPath2 = path.join(__dirname, '..', 'csv','relatedChunks', 'xab.csv');
 const relatedDataPath3 = path.join(__dirname, '..', 'csv','relatedChunks', 'xac.csv');
 const relatedDataPath4 = path.join(__dirname, '..', 'csv','relatedChunks', 'xad.csv');
 const relatedDataPath5 = path.join(__dirname, '..', 'csv','relatedChunks', 'xae.csv');
 
-let stream = fs.createReadStream(relatedDataPath1); //railswitch here.
+let stream = fs.createReadStream(relatedDataPath1); // switch chunks here.
 let count = 0;
 let csvStream = fastcsv
   .parse()

@@ -1,4 +1,5 @@
 const models = require('../../models/models.js');
+const { productStylesDataShaper, specificProductDataShaper } = require('./helpers');
 
 getDefaultAmount = (req, res) => {
   models.getDefaultAmount((err, result) => {
@@ -22,18 +23,8 @@ getSpecificProduct = (req, res) => {
   const productPromise = models.getSpecificProduct(productId);
   const featuresPromise = models.getProductFeatures(productId);
 
-  Promise.all([productPromise, featuresPromise]).then((values) => {
-    const product = values[0].rows;
-    const features = values[1].rows;
-
-    product[0].features = [];
-
-    for (let i=0; i<features.length; i++) {
-      product[0].features.push({feature: features[i].featurename, value: features[i].featurevalue});
-    }
-
-    return product[0];
-  })
+  Promise.all([productPromise, featuresPromise])
+  .then(specificProductDataShaper(data))
   .catch((err) => {res.status(400).send(err)})
   .then((product) => {res.status(200).send(product)});
 }
@@ -53,27 +44,8 @@ getProductStyles = (req, res) => {
   const photosPromise = models.getPhotos(productId);
   const skusPromise = models.getSkus(productId);
 
-  Promise.all([stylesPromise, photosPromise, skusPromise]).then((values) => {
-    const styles = values[0].rows;
-    const photos = values[1].rows;
-    const skus = values[2].rows;
-
-    for (let i=0; i<styles.length; i++) {
-      styles[i].photos = [];
-      styles[i].skus = {};
-      photos.forEach((photo) => {
-        if(photo.styleid === styles[i].styleid) {
-          styles[i].photos.push({url: photo.url, thumbnail_url: photo.thumbnail_url});
-        }
-      })
-      skus.forEach((sku) => {
-        if(sku.styleid === styles[i].styleid) {
-          styles[i].skus[sku.id] = {size: sku.size, quantity: sku.quantity};
-        }
-      })
-    }
-    return styles;
-  })
+  Promise.all([stylesPromise, photosPromise, skusPromise])
+  .then(productStylesDataShaper(data))
   .catch((err) => {res.status(400).send(err)})
   .then((styles) => {res.status(200).send(styles)});
 }

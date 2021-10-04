@@ -1,4 +1,4 @@
-const controllers = require('./middleware/controllers/controllers.js')
+const controllers = require('./controllers/controllers.js')
 var router = require('express').Router();
 
 router.get('/products/:product_id/styles', controllers.getProductStyles);
