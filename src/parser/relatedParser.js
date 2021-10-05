@@ -3,9 +3,9 @@ const path = require('path');
 const fastcsv = require('fast-csv');
 
 const { Client } = require('pg');
-const connectionString = 'postgres://lesliengo:postgres@localhost:5432/testproducts';
+const DB_CONNECTION_STRING = 'postgres://lesliengo:postgres@localhost:5432/testproducts';
 const client = new Client({
-    connectionString: connectionString
+    connectionString: DB_CONNECTION_STRING
 });
 client.connect();
 

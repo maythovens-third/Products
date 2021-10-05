@@ -1,4 +1,4 @@
-const models = require('../../models/models.js');
+const models = require('../models/models.js');
 const { productStylesDataShaper, specificProductDataShaper } = require('./helpers');
 
 getDefaultAmount = (req, res) => {
@@ -49,8 +49,6 @@ getProductStyles = (req, res) => {
   .catch((err) => {res.status(400).send(err)})
   .then((styles) => {res.status(200).send(styles)});
 }
-
-
 
 module.exports = {
   getDefaultAmount,
