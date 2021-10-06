@@ -31,7 +31,7 @@ This API was built in one and a half weeks in May 2021, and deployed on AWS.
 The following instructions will help get the server up and running:
 
 - `npm install` - installs app and development dependencies
-- `npm dev` - start the app with nodemon, or start normally with `npm start`
+- `npm run dev` - start the app with nodemon, or start normally with `npm start`
 - In the `db` folder, view the `PG` connection object in `db.js`. Input your Postgres credentials either here or `export` them into environment variables. The database value can be left as `products`. The following snippet is what to look for:
 
 ```js
