@@ -2,12 +2,12 @@
 
 The Atelier Product API provides fashion product data to the eCommerce site PROJECT:Catwalk. The API is responsible for retrieving data from an instance of Postgres, as well shaping the data so that it may be consumed by the client. The API is built with ExpressJS, which is a Node.js application framework. It was requested that this API meet and sustain approximately 1000 requests per second.
 
-This API was built in one and a half weeks.
+This API was built in one and a half weeks, and deployed on AWS.
 
 ## Contents
   * [Stack](#Stack)
   * [Setup](#Setup)
-  * [Schema-Diagram](#Schema-Diagram)
+  * [Schema Diagram](#Schema-Diagram)
   * [Endpoints](#Endpoints)
   * [Load Testing and Optimizations](#Load-Testing-and-Optimizations)
   * [Optimizations Beyond Existing Constraints](#Optimizations-beyond-existing-constraints)
@@ -340,7 +340,7 @@ A feature of PostgresQL, cluster indexing rewrites all related indexes to be phy
 
 ### Vertical Scaling (financial constraint)
 
-Because the EC2.micro employed provides Postgres a single processor, Postgres is tuned to employ a single worker. If the financial constraints were lifted, better hardware would allow Postgres to be tuned to employ more workers, increasing the performance of the system.
+Because the EC2.micro employed provides Postgres a single processor, the instance of Postgres used in the tests was tuned to employ a single worker. If the financial constraints were lifted, better hardware would allow Postgres to be tuned to employ more workers, increasing the performance of the system.
 
 ### Database Sharding (time constraint)
 
