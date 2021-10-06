@@ -69,7 +69,7 @@ Included in the `NGINX` folder is a configuration file for the NGINX load balanc
 
 ## Schema Diagram
 
-![schemaDiagram](./readMeImages\Atelier Product API PostgreSQL Schema good crop.png)
+![schemaDiagram](readMeImages\Atelier Product API PostgreSQL Schema good crop.png)
 
 ## Endpoints
 
