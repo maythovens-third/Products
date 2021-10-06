@@ -10,7 +10,7 @@ This API was built in one and a half weeks, and deployed on AWS.
     * [Server](#Server)
     * [Test Database](#Test-Database)
     * [Unit Testing](#Unit-Testing)
-    * [NGINX Load Balancer](#NGINX-Load-Balancer-(optional))
+    * [NGINX Load Balancer](#NGINX-Load-Balancer-optional)
   * [Schema Diagram](#Schema-Diagram)
   * [Endpoints](#Endpoints)
   * [Load Testing and Optimizations](#Load-Testing-and-Optimizations)
