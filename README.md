@@ -10,7 +10,7 @@ This API was built in one and a half weeks, and deployed on AWS.
   * [Schema Diagram](#Schema-Diagram)
   * [Endpoints](#Endpoints)
   * [Load Testing and Optimizations](#Load-Testing-and-Optimizations)
-  * [Optimizations Beyond Existing Constraints](#Optimizations-beyond-existing-constraints)
+  * [Future Optimizations](#Future-Optimizations)
 
 ## Stack
 
@@ -330,13 +330,28 @@ Caching of server responses dramatically improved the response time for each req
 
 ### Horizontal Scaling
 
-Deployment of multiple Express server instances increases the load the system is able to handle, but results from K6 testing indicate that replication provides no meaningful increase in performance beyond 3 servers at 1000RPS.
+Deployment of multiple Express server instances increases the load the system is able to handle, but results from K6 testing indicate that scaling provides no meaningful increase in performance beyond 3 servers for the tests used. The tests stressed the system with up to 3000 virtual users with one request each.
+
+A single server resulted in a 63% success rate.
+![single-server](https://github.com/maythovens-third/Products/blob/main/readMeImages/1-server.png)
+
+Two servers dramatically increases the success rate.
+![2 servers](https://github.com/maythovens-third/Products/blob/main/readMeImages/2-servers.png)
+
+A third server increases the success rate, but not as much as the second server.
+![3 servers](https://github.com/maythovens-third/Products/blob/main/readMeImages/3-servers.png)
+
+A fourth server shows no discernable increase in performance.
+![4 servers](https://github.com/maythovens-third/Products/blob/main/readMeImages/4-servers.png)
+
+A fifth was tested, but results do not change.
+![5 servers](https://github.com/maythovens-third/Products/blob/main/readMeImages/5-servers.png)
 
 ### Cluster Indexing
 
 A feature of PostgresQL, cluster indexing rewrites all related indexes to be physically near each other on disk. This resulted in an almost unnoticeable increase in performance.
 
-## Optimizations Beyond Existing Constraints
+## Future Optimizations
 
 ### Vertical Scaling (financial constraint)
 
