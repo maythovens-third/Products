@@ -2,7 +2,7 @@
 
 The Atelier Product API provides fashion product data to the eCommerce site PROJECT:Catwalk. The API is responsible for retrieving data from an instance of Postgres, as well shaping the data so that it may be consumed by the client. The API is built with ExpressJS, which is a Node.js application framework. It was requested that this API meet and sustain approximately 1000 requests per second.
 
-This API was built in one and a half weeks.
+This API was built in one and a half weeks, and deployed on AWS.
 
 ## Contents
   * [Stack](#Stack)
