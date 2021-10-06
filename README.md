@@ -340,7 +340,7 @@ A feature of PostgresQL, cluster indexing rewrites all related indexes to be phy
 
 ### Vertical Scaling (financial constraint)
 
-Because the EC2.micro employed provides Postgres a single processor, Postgres is tuned to employ a single worker. If the financial constraints were lifted, better hardware would allow Postgres to be tuned to employ more workers, increasing the performance of the system.
+Because the EC2.micro employed provides Postgres a single processor, the instance of Postgres used in the tests was tuned to employ a single worker. If the financial constraints were lifted, better hardware would allow Postgres to be tuned to employ more workers, increasing the performance of the system.
 
 ### Database Sharding (time constraint)
 
