@@ -16,7 +16,20 @@ The Atelier Product API provides fashion product data to the eCommerce site PROJ
 - K6 - load testing
 - Jest/Supertest - endpoint unit testing
 
-# Endpoints:
+# Endpoints
+
+Endpoints that need parameters are protected by a guard clause to keep the server from crashing:
+
+```js
+function validateParameters() {
+  let args = Array.from(arguments);
+  return args.every(arg => {
+    return parseInt(arg) && parseInt(arg) >= 1;
+  });
+};
+
+if(!validateParameters(page, amount)) return res.status(400).send('Invalid parameters.');
+```
 
 ## Get default amount of products, or get custom amount:
 

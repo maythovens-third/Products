@@ -9,11 +9,12 @@ getDefaultAmount = (req, res) => {
 }
 
 getCustomAmount = (req, res) => {
-  let { amount, page } = req.params;
+  const { amount, page } = req.params;
   const offset = (amount * (page - 1));
   const pageAndQty = [offset, amount];
 
   if(!validateParameters(amount, page)) return res.status(400).send('Invalid parameters.');
+
   models.getCustomAmount(pageAndQty, (err, result) => {
     if(err) res.status(400).send(err);
     res.status(200).send(result.rows);
@@ -22,6 +23,7 @@ getCustomAmount = (req, res) => {
 
 getSpecificProduct = (req, res) => {
   const productId = req.params.product_id;
+
   if(!validateParameters(productId)) return res.status(400).send('Invalid parameter.');
 
   const productPromise = models.getSpecificProduct(productId);
@@ -35,7 +37,9 @@ getSpecificProduct = (req, res) => {
 
 getRelatedProducts = (req, res) => {
   const productId = req.params.product_id;
+
   if(!validateParameters(productId)) return res.status(400).send('Invalid parameter.');
+
   models.getRelatedProducts(productId, (err, products) => {
     if(err) res.status(400).send(err);
     res.status(200).send(products.rows);
@@ -44,7 +48,9 @@ getRelatedProducts = (req, res) => {
 
 getProductStyles = (req, res) => {
   const productId = req.params.product_id;
+
   if(!validateParameters(productId)) return res.status(400).send('Invalid parameter.');
+
   const stylesPromise = models.getProductStyles(productId);
   const photosPromise = models.getPhotos(productId);
   const skusPromise = models.getSkus(productId);

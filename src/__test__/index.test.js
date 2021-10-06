@@ -7,6 +7,20 @@ describe('getProductStyles -- /product/:product_id/styles', () => {
     const res = await request(app).get('/products/1/styles');
     expect(res.status).toBe(200);
   });
+
+  it('returns status code 400 when passed invalid parameters', async () => {
+    const res = await request(app).get('/products/asdf/styles');
+    expect(res.status).toBe(400);
+  });
+
+  it('returns styles of the product_id passed in', async () => {
+    const res = await request(app).get('/products/1/styles');
+    let styleIDs = res.body.map(style => style.styleid);
+    expect(Array.isArray(res.body)).toBeTruthy();
+    expect(res.body).toHaveLength(6);
+    expect(styleIDs).toEqual([1,2,3,4,5,6]);
+    expect(res.body[5].name).toBe("Dark Grey & Black");
+  });
 });
 
 describe('getRelatedProducts -- /product/:product_id/related', () => {
@@ -18,6 +32,15 @@ describe('getRelatedProducts -- /product/:product_id/related', () => {
   it('returns status code 400 when passed invalid parameters', async () => {
     const res = await request(app).get('/products/asdf/related');
     expect(res.status).toBe(400);
+  });
+
+  it('returns products related to the product_id passed in', async () => {
+    const res = await request(app).get('/products/1/related');
+    let productIds = res.body.map(product => product.productid);
+    expect(Array.isArray(res.body)).toBeTruthy();
+    expect(res.body).toHaveLength(4);
+    expect(productIds).toEqual([2,3,7,8]);
+    expect(res.body[2].name).toBe("Blues Suede Shoes");
   });
 });
 
@@ -36,7 +59,7 @@ describe('getCustomAmount -- /products/:page&:amount', () => {
   });
 
   it('returns status code 400 when passed invalid parameters', async () => {
-    const res = await request(app).get('/products/asdf&asdf');
+    const res = await request(app).get('/products/asdf&-7');
     expect(res.status).toBe(400);
   });
 });
