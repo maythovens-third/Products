@@ -29,7 +29,7 @@ getProductFeatures = (productId) => {
 };
 
 getRelatedProducts = (productId, cb) => {
-  const q = 'SELECT ARRAY (SELECT relatedId FROM related_join WHERE productId = $1)';
+  const q = 'SELECT * FROM products WHERE productId IN (SELECT relatedId FROM Related_Join WHERE productId = $1)';
   client.query(q, [productId], (err, result) => {
     if (err) cb(err);
     cb(null, result);

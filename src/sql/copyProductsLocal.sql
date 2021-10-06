@@ -11,11 +11,9 @@ CREATE TABLE Products (
 );
 
 COPY Products(productId, name, slogan, description, category, defaultPrice)
-FROM '/product.csv'
+FROM '../truncDemoData/product.csv'
 DELIMITER ','
 CSV HEADER;
-
-
 
 DROP TABLE IF EXISTS Product_Features;
 
@@ -28,12 +26,9 @@ CREATE TABLE Product_Features (
 );
 
 COPY Product_Features(id, productId, featureName, featureValue)
-FROM '/features.csv'
+FROM '../truncDemoData/features.csv'
 DELIMITER ','
 CSV HEADER;
-
-
-
 
 DROP TABLE IF EXISTS Related_Join;
 
@@ -45,12 +40,9 @@ CREATE TABLE Related_Join (
 );
 
 COPY Related_Join(id, productId, relatedId)
-FROM '/related.csv'
+FROM '../truncDemoData/related.csv'
 DELIMITER ','
 CSV HEADER;
-
-
-
 
 DROP TABLE IF EXISTS Product_Styles;
 
@@ -65,12 +57,9 @@ CREATE TABLE Product_Styles (
 );
 
 COPY Product_Styles(styleId, productId, name, salePrice, originalPrice, defaultStyle)
-FROM '/styles.csv'
+FROM '../truncDemoData/styles.csv'
 DELIMITER ','
 CSV HEADER;
-
-
-
 
 DROP TABLE IF EXISTS Photos;
 
@@ -83,12 +72,9 @@ CREATE TABLE Photos (
 );
 
 COPY Photos(id, styleId, url, thumbnail_url)
-FROM '/photos.csv'
+FROM '../truncDemoData/photos.csv'
 DELIMITER ','
 CSV HEADER;
-
-
-
 
 DROP TABLE IF EXISTS SKUs;
 
@@ -101,7 +87,7 @@ CREATE TABLE SKUs (
 );
 
 COPY SKUs(id, styleId, size, quantity)
-FROM '/skus.csv'
+FROM '../truncDemoData/skus.csv'
 DELIMITER ','
 CSV HEADER;
 

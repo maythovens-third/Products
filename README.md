@@ -14,6 +14,7 @@ The Atelier Product API provides fashion product data to the eCommerce site PROJ
 - NGINX - load balancing and static caching
 - PostgresQL - database
 - K6 - load testing
+- Jest/Supertest - endpoint unit testing
 
 # Endpoints:
 
@@ -189,7 +190,6 @@ The Atelier Product API provides fashion product data to the eCommerce site PROJ
             	}
     },
   // ...
-}
 ```
 
 ## Get all related products of target product:
@@ -208,22 +208,52 @@ The Atelier Product API provides fashion product data to the eCommerce site PROJ
 
 ### OUTPUT:
 
-  An array of product IDs (int) of all products related to the specified product.
+  An array of all products and their details related to the specified product.
 
 ### EXAMPLE:
 
 ```
 [
-  2,
-  3,
-  8,
-  7
-],
+    {
+        "productid": 2,
+        "name": "Bright Future Sunglasses",
+        "slogan": "You've got to wear shades",
+        "description": "Where you're going you might not need roads, but you definitely need some shades. Give those baby blues a rest and let the future shine bright on these timeless lenses.",
+        "category": "Accessories",
+        "defaultprice": 69
+    },
+    {
+        "productid": 3,
+        "name": "Morning Joggers",
+        "slogan": "Make yourself a morning person",
+        "description": "Whether you're a morning person or not.  Whether you're gym bound or not.  Everyone looks good in joggers.",
+        "category": "Pants",
+        "defaultprice": 40
+    },
+    {
+        "productid": 7,
+        "name": "Blues Suede Shoes",
+        "slogan": "2019 Stanley Cup Limited Edition",
+        "description": "Touch down in the land of the Delta Blues in the middle of the pouring rain",
+        "category": "Dress Shoes",
+        "defaultprice": 120
+    },
+    {
+        "productid": 8,
+        "name": "YEasy 350",
+        "slogan": "Just jumped over jumpman",
+        "description": "These stretchy knit shoes show off asymmetrical lacing and a big sculpted rubber midsole. In a nod to adidas soccer heritage.",
+        "category": "Kicks",
+        "defaultprice": 450
+    }
+]
 ```
 
 # Load Testing and Optimizations
 
-K6 load testing was employed to locate where optimizations could be made. The optimizations made with given constraints are as follows:
+K6 load testing was employed to locate where optimizations could be made. All tests were performed while each component was deployed on EC2.micros.
+
+K6 testing stressed the NGINX load balancer with up to 3000 requests per second. The optimizations made with given constraints are as follows:
 
 ### Static Caching via NGINX Load Balancer Instance
 
@@ -231,17 +261,17 @@ Caching of server responses dramatically improved the response time for each req
 
 ### Horizontal Scaling
 
-Deployment of multiple Express server instances increases the load the system is able to handle, but results from K6 testing indicate that replication provides no meaningful increase in performance beyond 3 servers.
+Deployment of multiple Express server instances increases the load the system is able to handle, but results from K6 testing indicate that replication provides no meaningful increase in performance beyond 3 servers at 1000RPS.
 
 ### Cluster Indexing
 
-A feature of PostgresQL, cluster indexing rewrites all related indexes to be physically near each other on disk memory. This resulted in an almost unnoticeable increase in performance.
+A feature of PostgresQL, cluster indexing rewrites all related indexes to be physically near each other on disk. This resulted in an almost unnoticeable increase in performance.
 
 ## Optimizations Beyond Existing Constraints
 
 ### Vertical Scaling (financial constraint)
 
-Because the EC2 provides Postgres a single processor, Postgres is tuned to employ a single worker. If the financial constraints were lifted, better hardware (more CPUs) would allow Postgres to be tuned to employ more workers, increasing the performance of the system.
+Because the EC2.micro employed provides Postgres a single processor, Postgres is tuned to employ a single worker. If the financial constraints were lifted, better hardware would allow Postgres to be tuned to employ more workers, increasing the performance of the system.
 
 ### Database Sharding (time constraint)
 
