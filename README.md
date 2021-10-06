@@ -69,7 +69,7 @@ Included in the `NGINX` folder is a configuration file for the NGINX load balanc
 
 ## Schema Diagram
 
-![schemaDiagram](readMeImages\schemaDiagram.png)
+![schemaDiagram](./readMeImages\schemaDiagram.png)
 
 ## Endpoints
 
