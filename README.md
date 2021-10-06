@@ -2,13 +2,16 @@
 
 The Atelier Product API provides fashion product data to the eCommerce site PROJECT:Catwalk. The API is responsible for retrieving data from an instance of Postgres, as well shaping the data so that it may be consumed by the client. The API is built with ExpressJS, which is a Node.js application framework. It was requested that this API meet and sustain approximately 1000 requests per second.
 
-## Contents:
+This API was built in one and a half weeks.
+
+## Contents
   * [Stack](#Stack)
+  * [Setup](#Setup)
   * [Endpoints](#Endpoints)
   * [Load Testing and Optimizations](#Load-Testing-and-Optimizations)
   * [Optimizations Beyond Existing Constraints](#Optimizations-beyond-existing-constraints)
 
-## Stack:
+## Stack
 
 - Express.js - server
 - NGINX - load balancing and static caching
@@ -16,7 +19,59 @@ The Atelier Product API provides fashion product data to the eCommerce site PROJ
 - K6 - load testing
 - Jest/Supertest - endpoint unit testing
 
-# Endpoints
+## Setup
+
+### Server
+
+The following instructions will help get the server up and running:
+
+- `npm install` - installs app and development dependencies
+- `npm dev` - start the app with nodemon, or start normally with `npm start`
+- In the `db` folder, view the `PG` connection object in `db.js`. Input your Postgres credentials either here or `export` them into environment variables. The database value can be left as `products`. The following snippet is what to look for:
+
+```js
+const client = new Client({
+  user: (process.env.DB_USERNAME || 'postgres'),
+  host: process.env.HOST,
+  database: 'products',
+  password: (process.env.DB_PASSWORD || '1234'),
+  port: 5432,
+})
+```
+
+### Test Database
+
+In order for the unit tests to work and for the API to be demoed, the server must be connected to a test database. Mock data is provided in the `truncDemoData` folder and should be loaded into Postgres with the following instructions:
+
+- Install Postgres.
+- Find the `sql` folder and open `copyProductsLocal.sql`. You will need to change the file paths of all the `FROM` selectors:
+
+```sql
+COPY Products(productId, name, slogan, description, category, defaultPrice)
+FROM '../truncDemoData/product.csv'
+DELIMITER ','
+CSV HEADER;
+```
+
+- Direct each `FROM` to their respective file in the `truncDemoData` folder. There are 6 CSV files total.
+- Load `copyProductsLocal.sql` into Postgres to create and insert mock data into tables.
+- Load `fKeys.sql` to create the foreign keys.
+- Finally, load `createIndex.sql` to create indexes and cluster indexes on the tables.
+- The API should now be able to retrieve data from the test database.
+
+### NGINX Load Balancer (optional)
+
+Included in the `NGINX` folder is a configuration file for the NGINX load balancer. All it needs are the IP addresses of the API's server instances.
+
+- Install NGINX.
+- Open the `nginx.conf` and add the IP addresses of each server instance that will be communicating with the load balancer.
+- Direct requests to port 80.
+
+## Schema Diagram
+
+![schemaDiagram](./readMeImages\Atelier Product API PostgreSQL Schema good crop.png)
+
+## Endpoints
 
 Endpoints that need parameters are protected by a guard clause to keep the server from crashing:
 
