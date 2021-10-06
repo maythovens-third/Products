@@ -7,6 +7,10 @@ This API was built in one and a half weeks, and deployed on AWS.
 ## Contents
   * [Stack](#Stack)
   * [Setup](#Setup)
+  **[Server](#Server)
+  **[Test Database](#Test-Database)
+  **[Unit Testing](#Unit-Testing)
+  **[NGINX Load Balancer](#NGINX-Load-Balancer)
   * [Schema Diagram](#Schema-Diagram)
   * [Endpoints](#Endpoints)
   * [Load Testing and Optimizations](#Load-Testing-and-Optimizations)
@@ -59,6 +63,12 @@ CSV HEADER;
 - Load `fKeys.sql` to create the foreign keys.
 - Finally, load `createIndex.sql` to create indexes and cluster indexes on the tables.
 - The API should now be able to retrieve data from the test database.
+
+### Unit Testing
+
+Once the server is hooked up to the database and the mock data has been inserted into the tables, the included endpoint unit tests can be executed. 
+
+- `npm test` to run endpoint unit testing. 
 
 ### NGINX Load Balancer (optional)
 
