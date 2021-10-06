@@ -7,7 +7,7 @@ This API was built in one and a half weeks.
 ## Contents
   * [Stack](#Stack)
   * [Setup](#Setup)
-  * [Schema-Diagram](#Schema-Diagram)
+  * [Schema Diagram](#Schema-Diagram)
   * [Endpoints](#Endpoints)
   * [Load Testing and Optimizations](#Load-Testing-and-Optimizations)
   * [Optimizations Beyond Existing Constraints](#Optimizations-beyond-existing-constraints)
