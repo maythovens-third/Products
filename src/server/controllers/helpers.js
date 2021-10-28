@@ -1,4 +1,4 @@
-async function productStylesDataShaper(values) {
+function productStylesDataShaper(values) {
   const styles = values[0].rows;
   const photos = values[1].rows;
   const skus = values[2].rows;
@@ -18,10 +18,10 @@ async function productStylesDataShaper(values) {
     });
   };
 
-  return await styles;
+  return styles;
 };
 
-async function specificProductDataShaper(values) {
+function specificProductDataShaper(values) {
   const product = values[0].rows;
   const features = values[1].rows;
 
@@ -31,7 +31,7 @@ async function specificProductDataShaper(values) {
     product[0].features.push({feature: features[i].featurename, value: features[i].featurevalue});
   };
 
-  return await product[0];
+  return product[0];
 };
 
 function validateParameters() {
