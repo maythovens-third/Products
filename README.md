@@ -2,11 +2,15 @@
 
 The Atelier Product API provides fashion product data to the eCommerce site PROJECT:Catwalk. The API is responsible for retrieving data from an instance of Postgres, as well shaping the data so that it may be consumed by the client. The API is built with ExpressJS, which is a Node.js application framework. It was requested that this API meet and sustain approximately 1000 requests per second.
 
-This API was built in one and a half weeks, and deployed on AWS.
+This API was built in one and a half weeks in May 2021, and deployed on AWS.
 
 ## Contents
   * [Stack](#Stack)
   * [Setup](#Setup)
+    * [Server](#Server)
+    * [Test Database](#Test-Database)
+    * [Unit Testing](#Unit-Testing)
+    * [NGINX Load Balancer](#NGINX-Load-Balancer-optional)
   * [Schema Diagram](#Schema-Diagram)
   * [Endpoints](#Endpoints)
   * [Load Testing and Optimizations](#Load-Testing-and-Optimizations)
@@ -27,7 +31,7 @@ This API was built in one and a half weeks, and deployed on AWS.
 The following instructions will help get the server up and running:
 
 - `npm install` - installs app and development dependencies
-- `npm dev` - start the app with nodemon, or start normally with `npm start`
+- `npm run dev` - start the app with nodemon, or start normally with `npm start`
 - In the `db` folder, view the `PG` connection object in `db.js`. Input your Postgres credentials either here or `export` them into environment variables. The database value can be left as `products`. The following snippet is what to look for:
 
 ```js
@@ -59,6 +63,12 @@ CSV HEADER;
 - Load `fKeys.sql` to create the foreign keys.
 - Finally, load `createIndex.sql` to create indexes and cluster indexes on the tables.
 - The API should now be able to retrieve data from the test database.
+
+### Unit Testing
+
+Once the server is hooked up to the database and the mock data has been inserted into the tables, the included endpoint unit tests can be executed. 
+
+- `npm test` to run endpoint unit testing. 
 
 ### NGINX Load Balancer (optional)
 
